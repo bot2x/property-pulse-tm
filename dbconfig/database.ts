@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 let connected = false;
 
@@ -12,7 +12,7 @@ const connectDB = async () => {
     }
 
     try {
-        await mongoose.connect(process.env.MONGO_URI);
+        await mongoose.connect(process.env.MONGO_URI!);
         connected = true;
         console.log("Mongodb connected...");
 

@@ -8,8 +8,13 @@ import {
     FaMapMarker
 } from "react-icons/fa";
 
-const PropertyCard = ({ propertyInfo }) => {
+import { IProperty } from "@/models/Property";
+
+
+const PropertyCard = ( { propertyInfo } ) => {
     const { rates } = propertyInfo;
+
+    // console.log(propertyInfo.createdAt);
 
     const rateDisplay = () => {
         if (rates.monthly) {
