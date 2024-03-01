@@ -17,6 +17,21 @@ async function fetchProperties() {
     noStore();
     const resp = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/properties`);
     
+    // for (let h of resp.headers.keys()) {
+    //   console.log(h);
+    // }
+
+    // console.log({
+    //   "DEBUG" : {
+    //       "resp_obj" : resp,
+    //       "headers" : resp.headers.get("content-type"),
+    //       "body" : resp.body,
+    //       "status" : resp.status,
+    //       "url" : resp.url,
+    //       "redirected" : resp.redirected
+    //   }
+    // });
+
     if (!resp.ok) {
       throw new Error("Failed to fetch data.");
     }
