@@ -102,7 +102,7 @@ export interface IProperty {
     beds : number,
     baths : number,
     square_feet : number,
-    amenities? : string,
+    amenities? : string[],
     rates? : {
         nightly? : number,
         weekly? : number,
