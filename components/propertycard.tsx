@@ -52,36 +52,36 @@ const PropertyCard = ( {
                 </h3>
 
                 <div className="flex justify-center gap-4 text-gray-500 mb-4">
-                    <p>
+                    <div>
                         <div className="inline mr-2"><FaBed/></div> {propertyInfo.beds}{" "}
                         <span className="md:hidden lg:inline">Beds</span>
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         <div className="inline mr-2"><FaBath/></div> {propertyInfo.baths}{" "}
                         <span className="md:hidden lg:inline">Baths</span>
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         <div className="inline mr-2"><FaRulerCombined/></div>
                         {propertyInfo.square_feet}{" "}
                         <span className="md:hidden lg:inline">sqft</span>
-                    </p>
+                    </div>
                 </div>
 
                 <div className="flex justify-center gap-4 text-green-900 text-sm mb-4">
                     {rates?.nightly && (
-                        <p>
+                        <div>
                             <MyIcon faIcon={FaMoneyBill} className="inline mr-2" /> Nightly
-                        </p>
+                        </div>
                     )}
                     {rates?.weekly && (
-                        <p>
+                        <div>
                             <MyIcon faIcon={FaMoneyBill} className="inline mr-2" /> Weekly
-                        </p>
+                        </div>
                     )}
                     {rates?.monthly && (
-                        <p>
+                        <div>
                             <MyIcon faIcon={FaMoneyBill} className="inline mr-2" /> Monthly
-                        </p>
+                        </div>
                     )}
                 </div>
 

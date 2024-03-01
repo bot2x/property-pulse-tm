@@ -18,4 +18,4 @@ const MyIcon = ({
   );
 };
 
-export default MyIcon
+export default MyIcon;
