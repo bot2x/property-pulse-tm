@@ -7,7 +7,12 @@ const override = {
     margin : '100px auto'
 }
 
-const LoadingPage = ({loading}) => {
+interface LoadingPageProps {
+  loading : boolean,
+};
+
+const LoadingPage = ({loading} : LoadingPageProps) => {
+// const LoadingPage = () => {
   return (
     <ClipLoader
         color='#3b82f6'
@@ -17,7 +22,7 @@ const LoadingPage = ({loading}) => {
         aria-label="Loading Spinner"
         data-testid="loader"
       />
-  )
-}
+  );
+};
 
-export default LoadingPage
+export default LoadingPage;

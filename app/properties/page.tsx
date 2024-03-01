@@ -2,7 +2,6 @@
 
 // import properties from "@/properties.json";
 import PropertyCard from "@/components/propertycard";
-import LoadingPage from "@/app/loading";
 import { IProperty } from "@/models/Property";
 
 import { fetchProperties } from "@/utils/requests";

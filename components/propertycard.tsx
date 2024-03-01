@@ -9,19 +9,25 @@ import {
 } from "react-icons/fa";
 
 import { IProperty } from "@/models/Property";
+import MyIcon from "./geticon";
 
+interface propertyCardProps {
+    propertyInfo : IProperty
+}
 
-const PropertyCard = ( { propertyInfo } ) => {
+const PropertyCard = ( {
+    propertyInfo
+}: propertyCardProps ) => {
     const { rates } = propertyInfo;
 
     // console.log(propertyInfo.createdAt);
 
     const rateDisplay = () => {
-        if (rates.monthly) {
+        if (rates?.monthly) {
             return `${rates.monthly.toLocaleString()}/mo`;
-        } else if (rates.weekly) {
+        } else if (rates?.weekly) {
             return `${rates.weekly.toLocaleString()}/wk`;
-        } else if (rates.nightly) {
+        } else if (rates?.nightly) {
             return `${rates.nightly.toLocaleString()}/night`;
         }
     };
@@ -47,34 +53,34 @@ const PropertyCard = ( { propertyInfo } ) => {
 
                 <div className="flex justify-center gap-4 text-gray-500 mb-4">
                     <p>
-                        <FaBed className="inline mr-2" /> {propertyInfo.beds}{" "}
+                        <div className="inline mr-2"><FaBed/></div> {propertyInfo.beds}{" "}
                         <span className="md:hidden lg:inline">Beds</span>
                     </p>
                     <p>
-                        <FaBath className="inline mr-2" /> {propertyInfo.baths}{" "}
+                        <div className="inline mr-2"><FaBath/></div> {propertyInfo.baths}{" "}
                         <span className="md:hidden lg:inline">Baths</span>
                     </p>
                     <p>
-                        <FaRulerCombined className="inline mr-2" />
+                        <div className="inline mr-2"><FaRulerCombined/></div>
                         {propertyInfo.square_feet}{" "}
                         <span className="md:hidden lg:inline">sqft</span>
                     </p>
                 </div>
 
                 <div className="flex justify-center gap-4 text-green-900 text-sm mb-4">
-                    {rates.nightly && (
+                    {rates?.nightly && (
                         <p>
-                            <FaMoneyBill className="inline mr-2" /> Nightly
+                            <MyIcon faIcon={FaMoneyBill} className="inline mr-2" /> Nightly
                         </p>
                     )}
-                    {rates.weekly && (
+                    {rates?.weekly && (
                         <p>
-                            <FaMoneyBill className="inline mr-2" /> Weekly
+                            <MyIcon faIcon={FaMoneyBill} className="inline mr-2" /> Weekly
                         </p>
                     )}
-                    {rates.monthly && (
+                    {rates?.monthly && (
                         <p>
-                            <FaMoneyBill className="inline mr-2" /> Monthly
+                            <MyIcon faIcon={FaMoneyBill} className="inline mr-2" /> Monthly
                         </p>
                     )}
                 </div>
@@ -83,8 +89,8 @@ const PropertyCard = ( { propertyInfo } ) => {
 
                 <div className="flex flex-col lg:flex-row justify-between mb-4">
                     <div className="flex align-middle gap-2 mb-4 lg:mb-0">
-                        <FaMapMarker className="mt-1 text-orange-700" />
-                        <span className="text-orange-700"> {propertyInfo.location.city}{' '}{propertyInfo.location.state} </span>
+                        <MyIcon faIcon={FaMapMarker} className="mt-1 text-orange-700" />
+                        <span className="text-orange-700"> {propertyInfo.location?.city}{' '}{propertyInfo.location?.state} </span>
                     </div>
                     <Link
                         href={`/properties/${propertyInfo._id}`}

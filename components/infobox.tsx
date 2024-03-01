@@ -1,11 +1,22 @@
 import Link from "next/link";
 
+interface infoboxProps {
+  backgroundColor : string,
+  title : string,
+  description :string,
+  buttonInfo : {
+    text : string,
+    link : string,
+    backgroundColor : string
+  }
+}
+
 const InfoBox = ( {
         backgroundColor = "bg-gray-100", 
         title, 
         description, 
         buttonInfo
-} ) => {
+}: infoboxProps ) => {
 
   return (
     <div className={`${backgroundColor} p-6 rounded-lg shadow-md`}>
