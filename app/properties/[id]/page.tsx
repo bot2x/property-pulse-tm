@@ -42,7 +42,7 @@ const PropertiesPageforID = ({
       fetchPropertyData(id);
     }
 
-  }, [id, property]);
+  }, []);
   
   if (!property && !loading) {
     return (

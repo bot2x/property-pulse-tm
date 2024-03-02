@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+import AuthProvider from "@/components/authProvider";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 
@@ -19,14 +20,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-        <main>
-          {children}
-          <Footer />
-        </main>
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <Navbar />
+          <main>
+            {children}
+            <Footer />
+          </main>
+        </body>
+      </html>
+    </AuthProvider>
   );
 }
