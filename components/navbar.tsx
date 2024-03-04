@@ -36,6 +36,8 @@ const Navbar = () => {
   }, [session]);
 
   useEffect(() => {
+    console.log("useEffect of window click ran");
+
     const handleOutSideClick = ( e : globalThis.MouseEvent) => {
       if (!profileMenuRef.current?.contains(e.target as Node)) {
         // alert("Outside Clicked.");
@@ -46,15 +48,18 @@ const Navbar = () => {
 
       console.log("window click detected.");
     };
-
-    document.addEventListener("mousedown", handleOutSideClick);
-
+    
+    if (isProfileMenuOpen) {
+      console.log("setting the mousedown event on the document.");
+      document.addEventListener("mousedown", handleOutSideClick);
+    }
     return () => {
       document.removeEventListener("mousedown", handleOutSideClick);
     };
-  }, []);
 
+  }, [isProfileMenuOpen]);
 
+  
   return (
     <nav className="bg-blue-700 border-b border-blue-500">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
