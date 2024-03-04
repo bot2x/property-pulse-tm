@@ -113,7 +113,7 @@ export interface IProperty {
         email? : string,
         phone? : string,
     },
-    images : string[],
+    images : string[] | any[],
     is_features : boolean,
     createdAt : string,
     updatedAt : string,

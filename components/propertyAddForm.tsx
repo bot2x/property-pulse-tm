@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 const PropertyAddForm = () => {
     const [mounted, setMounted] = useState(false);
 
+    // const [fields, setFields] = useState<Partial<IProperty>>({
+    //     amenities : ['Wifi']
+    // });
     const [fields, setFields] = useState<Partial<IProperty>>({
         amenities : ['Wifi']
     });
@@ -21,9 +24,69 @@ const PropertyAddForm = () => {
         )
     }
 
-    const handleChange = () => {};
-    const handleAmenityChange = () => {};
-    const handleImageChange = () => {};
+    const handleChange = (e : React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>) => {
+        // console.log(e.target.name);
+        // console.log(e.target.value);
+        // console.log(e.currentTarget);
+
+        const { name, value } = e.target;
+
+        if (name.includes(".")) {
+            //This is a nested element.
+            const [outsideName, insideName] = name.split(".");
+
+            const keyType = outsideName as "location" | "rates" | "seller_info";//keyof Partial<IProperty>;
+
+            setFields((pv) => ({
+                ...pv,
+                [keyType] : {
+                    ...pv[keyType],
+                    [insideName] : value
+                }
+            }));
+        } else {
+            //this is a direct element.
+            setFields(pv => ({
+                ...pv,
+                [name] : value
+            }));
+        }
+    };
+    const handleAmenityChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+        // console.log(e.target.a)
+        const {name, value, checked} = e.target;
+        
+        const newAmenity = [...fields.amenities!];
+
+        if (checked) {
+            //add this to the amenities array.
+            newAmenity.push(value);
+        } else {
+            //remove this from the amenities array.
+            newAmenity.splice(newAmenity.indexOf(value), 1);
+        }
+
+        setFields((pv) => ({
+            ...pv,
+            amenities : newAmenity
+        }))
+    };
+
+    const handleImageChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target.files);
+
+        const { files } = e.target;
+
+        const newImageArr = [] as any[];
+        for (const f of files!) {
+            newImageArr.push(f);
+        }
+
+        setFields((pv) => ({
+            ...pv,
+            images : newImageArr
+        }));
+    };
 
 
     // console.log(fields);
