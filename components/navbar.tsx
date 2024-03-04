@@ -36,7 +36,7 @@ const Navbar = () => {
   }, [session]);
 
   useEffect(() => {
-    const handleOutSideClick = (e : unknown) => {
+    const handleOutSideClick = ( e : globalThis.MouseEvent) => {
       if (!profileMenuRef.current?.contains(e.target as Node)) {
         // alert("Outside Clicked.");
         // console.log("Outside Clicked. ");
