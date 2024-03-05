@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect, useRef, MouseEvent } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -26,6 +27,7 @@ const Navbar = () => {
   const profileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    console.log("getProider useEffect ran");
     const setAuthProvider = async () => {
       const res = await getProviders();
       setProvider(res);
@@ -59,6 +61,9 @@ const Navbar = () => {
 
   }, [isProfileMenuOpen]);
 
+  console.log({
+    session : session
+  });
   
   return (
     <nav className="bg-blue-700 border-b border-blue-500">

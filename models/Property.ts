@@ -114,7 +114,7 @@ export interface IProperty {
         phone? : string,
     },
     images : string[] | any[],
-    is_features : boolean,
+    is_features? : boolean,
     createdAt : string,
     updatedAt : string,
 }
