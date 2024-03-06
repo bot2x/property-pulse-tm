@@ -7,23 +7,22 @@ import { useEffect, useState } from "react";
 const PropertyAddForm = () => {
     const [mounted, setMounted] = useState(false);
 
-    // const [fields, setFields] = useState<Partial<IProperty>>({
-    //     amenities : ['Wifi']
-    // });
     const [fields, setFields] = useState<Partial<IProperty>>({
         name: "someName",
         description: "This is a property",
         location: {
             street: "someStreet",
             city: "someCity",
-            state: "someState"
+            state: "someState",
+            zipcode : ''
         },
         beds: 2,
         baths: 2,
         square_feet: 1500,
         rates: {
             weekly: 50,
-            monthly: 500
+            monthly: 500,
+            nightly : 0
         },
         seller_info: {
             name: "meSeller",

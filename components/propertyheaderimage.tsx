@@ -11,13 +11,14 @@ type propertyHeaderImageProp = {
 };
 
 const PropertyHeaderImage = ({ image }: propertyHeaderImageProp) => {
+    const displayImage = image.startsWith("https") ? image : `/images/properties/${image}`
     return (
         <>
             <section>
                 <div className="m-auto">
                     <div className="grid grid-cols-1">
                         <Image
-                            src={`/images/properties/${image}`}
+                            src={displayImage}
                             alt="Property Image"
                             className="object-cover h-[400px] w-full"
                             width={0}

@@ -1,6 +1,7 @@
 import connectDB from "@/dbconfig/database";
 import Property, { IProperty } from "@/models/Property";
 import { getUserFromSession } from "@/utils/getUserFromSession";
+import cloudinary from "@/dbconfig/cloudinary";
 
 
 export const GET = async (request: Request) => {
@@ -52,7 +53,7 @@ export const POST = async (request: Request) => {
         const amenities = formData.getAll("amenities") as string[];
         let images = (formData.getAll("images") as any[]).filter((image) => image.name !== '');
 
-        const propertyData: Omit<IProperty, "_id" | "createdAt" | "updatedAt" | "images"> = {
+        const propertyData: Omit<IProperty, "_id" | "createdAt" | "updatedAt" > = {
             type: formData.get("type") as string,
             name: formData.get("name") as string,
             description: formData.get("description") as string,
@@ -71,14 +72,47 @@ export const POST = async (request: Request) => {
             baths: parseInt(formData.get("baths") as string),
             square_feet: parseInt(formData.get("square_feet") as string),
             amenities,
-            // images,
             seller_info: {
                 name: formData.get("seller_info.name") as string,
                 email: formData.get("seller_info.email") as string,
                 phone: formData.get("seller_info.phone") as string,
             },
-            owner : userId
+            owner : userId,
+            images : []
         }
+
+        //We need to upload the images to cloudinaary and store the returned urls in the propertydata on db.
+        const uploadImagePromises = [];
+
+        for (const image of images) {
+            const imageBuffer = await image.arrayBuffer();
+            const imageArray = Array.from(new Uint8Array(imageBuffer));
+            const imageData = Buffer.from(imageArray);
+
+            //converty to base64
+            const imageBase64 = imageData.toString('base64');
+
+            const result = cloudinary.uploader.upload(
+                `data:image/png;base64,${imageBase64}`, {
+                    folder : "propertyPulseTs"
+                }
+            );
+
+            uploadImagePromises.push(result);
+        }
+
+        const uploadedImages = (await Promise.all(uploadImagePromises)).map((res) => {
+            return res.secure_url;
+        });
+        
+        // console.log({
+        //     DEBUG_IMAGES : {
+        //         ui : uploadedImages,
+        //         uip : uploadImagePromises
+        //     }
+        // });
+        
+        propertyData.images = uploadedImages; //add the urls.
 
         console.log(propertyData);
 

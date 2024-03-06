@@ -32,15 +32,22 @@ const PropertyCard = ( {
         }
     };
 
+    
+    const displayImage = propertyInfo.images[0]
+            ? propertyInfo.images[0].startsWith("https")
+                ? propertyInfo.images[0] 
+                : `/images/properties/${propertyInfo.images[0]}`
+            : `/logo.png` //add a default image here.
+
     return (
         <div className="rounded-xl shadow-md relative">
             <Image
-                src={`/images/properties/${propertyInfo.images[0]}`}
+                src={displayImage}
                 alt=""
                 width={0}
                 height={0}
                 sizes={"100vw"}
-                className="w-full h-auto rounded-t-xl"
+                className="w-full h-auto max-h-[350px] rounded-t-xl"
             />
             <div className="p-4">
                 <div className="text-left md:text-center lg:text-left mb-6">
