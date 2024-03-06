@@ -1,5 +1,6 @@
 import connectDB from "@/dbconfig/database";
 import Property, { IProperty } from "@/models/Property";
+import { getUserFromSession } from "@/utils/getUserFromSession";
 
 
 export const GET = async (request: Request) => {
@@ -25,6 +26,19 @@ export const GET = async (request: Request) => {
 
 export const POST = async (request: Request) => {
     try {
+        console.log("call on : ", request.url);
+
+        await connectDB;
+        const userSession = await getUserFromSession();
+
+        if (!userSession || !userSession.userId) {
+            return new Response("User data missing.", {
+                status : 403
+            });
+        }
+
+        const { user, userId } = userSession;
+
         const formData = await request.formData();
         // console.log(formData);
         // console.log({
@@ -38,7 +52,7 @@ export const POST = async (request: Request) => {
         const amenities = formData.getAll("amenities") as string[];
         let images = (formData.getAll("images") as any[]).filter((image) => image.name !== '');
 
-        const propertyData: Omit<IProperty, "_id" | "owner" | "createdAt" | "updatedAt"> = {
+        const propertyData: Omit<IProperty, "_id" | "createdAt" | "updatedAt" | "images"> = {
             type: formData.get("type") as string,
             name: formData.get("name") as string,
             description: formData.get("description") as string,
@@ -57,18 +71,25 @@ export const POST = async (request: Request) => {
             baths: parseInt(formData.get("baths") as string),
             square_feet: parseInt(formData.get("square_feet") as string),
             amenities,
-            images,
+            // images,
             seller_info: {
                 name: formData.get("seller_info.name") as string,
                 email: formData.get("seller_info.email") as string,
                 phone: formData.get("seller_info.phone") as string,
-            }
+            },
+            owner : userId
         }
+
         console.log(propertyData);
 
-        return new Response(JSON.stringify({ message: "data received" }), {
-            status: 200
-        });
+        const newProperty = new Property(propertyData);
+        await newProperty.save();
+
+        return Response.redirect(`${process.env.NEXTAUTH_URL}/properties/${newProperty._id}`);
+
+        // return new Response(JSON.stringify({ message: "data received" }), {
+        //     status: 200
+        // });
 
     } catch (error) {
         return new Response(JSON.stringify({ message: "Failed to post" }), {

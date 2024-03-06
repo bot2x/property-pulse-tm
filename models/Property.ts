@@ -89,7 +89,7 @@ const PropertySchema = new Schema({
 
 export interface IProperty {
     _id : string,//Schema.Types.ObjectId,
-    owner : Schema.Types.ObjectId,
+    owner : string,//Schema.Types.ObjectId,
     name : string,
     type : string,
     description? : string,

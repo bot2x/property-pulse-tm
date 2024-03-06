@@ -57,9 +57,7 @@ export const authOptions : NextAuthOptions = {
         //Modifies session object
         // async sessionn({ session }: { session: unknown}) {
         async session({ session }) {
-            console.log({
-                DEBUG_session : session
-            })
+           
             //get the user from the db.
             const user = await User.findOne({
                 email : session.user?.email
@@ -68,16 +66,24 @@ export const authOptions : NextAuthOptions = {
             //Need to handle the case when the user does not exists in database.
             //set the session id to user's id. The type for session seems to have changed.
             if (session.user) { 
-                session.user.id = user._id
+                session.user.id = user._id.toString();
             } else {
                 //when will this happen ?
                 session.user = {
-                    id : user._id,
+                    id : user._id.toString(),
                     name : "User",
                     email : "",
                     image : ""
                 };
             }
+
+            console.log({
+                DEBUG_session : session,
+                DEBUG_userId : {
+                    userId : user._id.toString(),
+                    userIdtype : typeof user._id
+                }
+            });
             return session;
         }
     }
