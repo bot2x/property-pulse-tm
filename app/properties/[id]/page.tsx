@@ -6,6 +6,7 @@ import { IProperty } from "@/models/Property";
 import { fetchPropertyById } from "@/utils/requests";
 import { useState, useEffect } from "react";
 import Spinner from "@/components/spinner";
+import PropertyImages from "@/components/propertyImages";
 
 interface PropertiesPageforIDProps {
   params : {
@@ -59,6 +60,7 @@ const PropertiesPageforID = ({
         <>
           <PropertyHeaderImage image={ property?.images[0]! } />
           <PropertyInfo property={property}/>
+          <PropertyImages images = {property?.images} />
         </>
       )}
     </>
